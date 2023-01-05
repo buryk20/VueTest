@@ -1,30 +1,57 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+    <div>
+        <PostForm
+        @create="createPost"
+        ></PostForm>
+        <PostList 
+        :posts="posts"
+        @remove="removePost"
+        ></PostList>
+    </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import PostForm from "@/components/postForm.vue";
+import PostList from "@/components/postList.vue"; 
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+    components: {
+        PostForm,
+        PostList
+    }, 
+    data() {
+        return {
+            posts: [
+                {id: 1, title: 'JavaScrit', description: 'Описание поста'},
+                {id: 2, title: 'JavaScrit2', description: 'Описание поста2'},
+                {id: 3, title: 'JavaScrit,3', description: 'Описание поста,3'}
+            ]
+        }
+    },
+    methods: {
+        createPost(post) {
+            if(post.title !== '' && post.description !== '') {
+                this.posts.push(post);
+                
+            } else {
+                alert('введите значение');
+            }
+        },
+        inputText(event) {
+            this.title = event.target.value;
+        },
+        removePost(post) {
+            // this.posts = this.posts.filter(p => p.id !== post.id);
+            this.posts = this.posts.filter(el => el.id !== post.id);
+        }
     }
-  }
+}
+</script>
+
+<style scoped lang="scss">
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 </style>
