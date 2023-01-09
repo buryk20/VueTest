@@ -7,7 +7,7 @@
             </div>
             <div>
                 <strong>Описание:</strong>
-                {{post.description}}
+                {{post.body}}
             </div>
         </div>
         <div class="post__btns">

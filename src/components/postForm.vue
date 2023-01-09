@@ -8,7 +8,7 @@
             type="text" 
             placeholder="Название"></MyInput>
             <MyInput 
-            v-model="post.description"
+            v-model="post.body"
             type="text" 
             placeholder="Описание"></MyInput>
             <MyButton
@@ -26,7 +26,7 @@ export default {
         return {
             post: {
                 title: "",
-                description: ""
+                body: ""
             }
         };
     },
@@ -36,10 +36,10 @@ export default {
             this.$emit("create", this.post);
             // console.log(this.post.title);
             // console.log(modelValue);
-            this.post = {
-                title: "",
-                description: ""
-            };
+            // this.post = {
+            //     title: "",
+            //     body: ""
+            // };
             
             // this.$emit("create", this.post);
         }
