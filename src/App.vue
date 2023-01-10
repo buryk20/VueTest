@@ -1,9 +1,18 @@
 <template>
     <div>
-        <h1>Страница с постами</h1>
-        <MyButton
-        @click="showDialog"
-        >Создать пользователя</MyButton>
+        <h1 class="app__title">Страница с постами</h1>
+        <div class="app__btns">
+            <MyButton
+            @click="showDialog"
+            >
+                Создать пользователя
+            </MyButton>
+            <mySelect 
+                :options="sortOptions"
+                v-model="selectedSort"
+            ></mySelect>
+        </div>
+        
         <myDialog v-model:show="dealogVisible">
             <PostForm
             @create="createPost"
@@ -34,7 +43,12 @@ export default {
         return {
             posts: [],
             dealogVisible: false,
-            isPostLoading: false
+            isPostLoading: false,
+            selectedSort: '',
+            sortOptions: [
+                {value: 'title', name: 'По названию'},
+                {value: 'body', name: 'По описанию'}
+            ]
         }
     },
     methods: {
@@ -74,6 +88,13 @@ export default {
     },
     mounted() {
         this.fetchPost();
+    },
+    watch: {
+        selectedSort(newValue) {
+            this.posts.sort((post1, post2) => {
+                
+            })
+        },
     }
 }
 </script>
@@ -83,5 +104,17 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.app {
+    &__btns {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__title {
+        margin-bottom: 16px;
+    }
 }
 </style>

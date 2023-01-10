@@ -43,7 +43,15 @@ export default {
             
             // this.$emit("create", this.post);
         }
-    }
+    },
+    // watch: {
+    //     post: {
+    //         handler(newVal) {
+    //             console.log(newVal);
+    //         },
+    //         deep: true
+    //     }
+    // }
 }
 
 </script>
