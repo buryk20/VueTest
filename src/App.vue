@@ -7,18 +7,18 @@
             >
                 Создать пользователя
             </MyButton>
-            <mySelect 
+            <mySelect
                 :options="sortOptions"
                 v-model="selectedSort"
             ></mySelect>
         </div>
-        
+
         <myDialog v-model:show="dealogVisible">
             <PostForm
             @create="createPost"
             ></PostForm>
         </myDialog>
-        <PostList 
+        <PostList
         :posts="posts"
         @remove="removePost"
         v-if="!isPostLoading"
@@ -29,7 +29,7 @@
 
 <script>
 import PostForm from "@/components/postForm.vue";
-import PostList from "@/components/postList.vue"; 
+import PostList from "@/components/postList.vue";
 import axios from "axios";
 import MyButton from "./components/UI/MyButton.vue";
 
@@ -38,7 +38,7 @@ export default {
     PostForm,
     PostList,
     MyButton
-}, 
+},
     data() {
         return {
             posts: [],
@@ -56,7 +56,7 @@ export default {
             if(post.title !== '' && post.body !== '') {
                 this.posts.push(post);
                 this.dealogVisible = false
-                
+
             } else {
                 alert('введите значение');
             }
@@ -74,16 +74,15 @@ export default {
         async fetchPost() {
             try {
                 this.isPostLoading = true;
-                
                     const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
                     this.posts = response.data;
             } catch (e) {
                 alert(e, 'errors')
-            } 
+            }
             finally {
                 this.isPostLoading = false;
             }
-            
+
         }
     },
     mounted() {
@@ -92,9 +91,9 @@ export default {
     watch: {
         selectedSort(newValue) {
             this.posts.sort((post1, post2) => {
-                
+                return post1[newValue]?.localeCompare(post2[newValue]);
             })
-        },
+        }
     }
 }
 </script>

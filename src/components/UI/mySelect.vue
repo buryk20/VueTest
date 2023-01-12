@@ -1,9 +1,9 @@
 <template>
-    <select v-bind="modelValue" class="sel-wrp" @change="changeOption">
+    <select v-bind:value="modelValue" class="sel-wrp" @change="changeOption">
         <option disabled value="">Выберите из списка</option>
-        <option 
-            v-for="option in options" 
-            :key="option.value" 
+        <option
+            v-for="option in options"
+            :key="option.value"
             :value="option.value"
         >
             {{ option.name }}
@@ -26,7 +26,7 @@ export default {
     methods: {
         changeOption(event) {
             this.$emit('update:modelValue', event.target.value);
-        }   
+        }
     }
 }
 </script>
