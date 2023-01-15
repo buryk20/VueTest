@@ -19,7 +19,7 @@
             ></PostForm>
         </myDialog>
         <PostList
-        :posts="posts"
+        :posts="sortedPosts"
         @remove="removePost"
         v-if="!isPostLoading"
         ></PostList>
@@ -47,7 +47,8 @@ export default {
             selectedSort: '',
             sortOptions: [
                 {value: 'title', name: 'По названию'},
-                {value: 'body', name: 'По описанию'}
+                {value: 'body', name: 'По описанию'},
+                {value: 'id', name: 'id'}
             ]
         }
     },
@@ -88,13 +89,30 @@ export default {
     mounted() {
         this.fetchPost();
     },
-    watch: {
-        selectedSort(newValue) {
-            this.posts.sort((post1, post2) => {
-                return post1[newValue]?.localeCompare(post2[newValue]);
-            })
+    computed: {
+        sortedPosts() {
+            return [...this.posts].sort((post1, post2) => {
+                if(typeof post1[this.selectedSort] === "number") {
+                    return post2[this.selectedSort] - post1[this.selectedSort];
+                } else {
+                    return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]);
+                } 
+            });
         }
-    }
+    },
+    // watch: {
+    //     selectedSort(newValue) {
+    //         this.posts.sort((post1, post2) => {
+    //             if(typeof post1[newValue] === "number") {
+    //                 return post2[newValue] - post1[newValue];
+    //             } else {
+    //                 return post1[newValue]?.localeCompare(post2[newValue]);
+    //             }
+                    
+    //         });
+            
+    //     }
+    // }
 }
 </script>
 
