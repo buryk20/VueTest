@@ -53,6 +53,9 @@ export default {
             isPostLoading: false,
             selectedSort: '',
             searchQuery: '',
+            page: 1,
+            limit: 10,
+            totalPage: 0,
             sortOptions: [
                 {value: 'title', name: 'По названию'},
                 {value: 'body', name: 'По описанию'},
@@ -83,8 +86,15 @@ export default {
         async fetchPost() {
             try {
                 this.isPostLoading = true;
-                    const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
-                    this.posts = response.data;
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+                    
+                params: {
+                    _page: this.page,
+                    _limit: this.limit
+                }
+                });
+                this.posts = response.data;
+                this.totalPage = Math.ceil(response.headers['x-total-count'] / this.limit);
             } catch (e) {
                 alert(e, 'errors')
             }
